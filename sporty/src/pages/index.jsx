@@ -1,3 +1,5 @@
+import { Home } from "./Home"
 import { Authetication } from "./Authentication"
 
-export { Authetication }
+
+export { Home, Authetication }

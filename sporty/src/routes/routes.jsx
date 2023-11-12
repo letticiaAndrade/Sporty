@@ -1,4 +1,4 @@
-import { Authetication } from "../pages";
+import { Authetication, Home } from "../pages";
 import { Route, Routes } from "react-router-dom";
 
 export function RoutesApp() {
@@ -6,6 +6,10 @@ export function RoutesApp() {
         <Routes>
             {/* TELAS REFERENTES A AUTENTICAÇÃO */}
             <Route path="/" element={<Authetication />} />
+
+            {/* TELAS REFERENTES A APLICAÇÃO */}
+            <Route path="/home" element={<Home />} />
+
         </Routes>
     )
 
