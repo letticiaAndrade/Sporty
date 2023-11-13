@@ -5,7 +5,6 @@ import Esporte from "../../public/assets/esporte.png";
 import { Eye, EyeClosed, LockKey, SignIn } from "@phosphor-icons/react"
 import { Button, Center, Flex, FormControl, FormErrorMessage, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from "@chakra-ui/react";
 
-
 export function Authetication() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -73,13 +72,15 @@ export function Authetication() {
     <>
       <Flex w="100%" h="100vh">
 
-        <Center bgImage={Esporte} filter='auto' blur='1px' bgSize="cover" display={{ base: "none", lg: "flex" }} bgColor="primary.400" flex={1}>
+        <Center bgImage={Esporte} filter='auto' flexDirection="column" blur='1px' bgSize="cover" display={{ base: "none", lg: "flex" }} bgColor="primary.400" flex={1}>
+          <Text fontSize={32} color="light.50" casing="uppercase">Sporty</Text>
+          {/* <Text fontSize={24} color="light.50" casing="uppercase"> A melhor plataforma de gerenciamento de torneios</Text> */}
+
         </Center>
 
         <Flex bgColor="light.100" flex={1} flexDir="column" justifyContent="center" padding={20}>
           <Text fontWeight="semibold" fontSize={28}>Bem - vindo de volta</Text>
           <Text fontSize={16} whiteSpace="pre-line">Se cadastre e gerencie seus torneios diretamente{"\n"} de dentro da plataforma.</Text>
-
 
           <Stack justifyContent="center" bgColor="light.200" padding={5} rounded={8} boxShadow="2xl" m={50} >
             <Tabs variant='enclosed' isFitted colorScheme="primary" >
