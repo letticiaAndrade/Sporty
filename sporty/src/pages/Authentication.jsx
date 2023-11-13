@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
+import Esporte from "../../public/assets/esporte.png";
 import { Eye, EyeClosed, LockKey, SignIn } from "@phosphor-icons/react"
 import { Button, Center, Flex, FormControl, FormErrorMessage, Input, InputGroup, InputLeftElement, InputRightElement, Stack, Text } from "@chakra-ui/react";
+
 
 export function Authetication() {
   const navigate = useNavigate();
@@ -52,19 +54,18 @@ export function Authetication() {
 
   return (
     <>
-      <Flex bgColor="red" w="100%" h="100vh">
+      <Flex w="100%" h="100vh">
 
-        <Center display={{ base: "none", lg: "flex" }} bgColor="primary.400" flex={1}>
-        
+        <Center bgImage={Esporte} filter='auto' blur='1px' bgSize="cover" display={{ base: "none", lg: "flex" }} bgColor="primary.400" flex={1}>
         </Center>
 
         <Flex bgColor="light.100" flex={1} flexDir="column" justifyContent="center" padding={20}>
-          <Text fontWeight="semibold" fontSize={32}>Bem - vindo de volta</Text>
-          <Text fontSize={18} whiteSpace="pre-line">Se cadastre e gerencie seus torneios diretamente{"\n"} de dentro da plataforma.</Text>
+          <Text fontWeight="semibold" fontSize={28}>Bem - vindo de volta</Text>
+          <Text fontSize={16} whiteSpace="pre-line">Se cadastre e gerencie seus torneios diretamente{"\n"} de dentro da plataforma.</Text>
 
           <form onSubmit={handleSubmit(onSubmit)}>
 
-            <Stack justifyContent="center" spacing={8} padding={5} rounded={8} boxShadow="initial" m={50} >
+            <Stack justifyContent="center" bgColor="light.200" padding={5} rounded={8} boxShadow="2xl" m={50} >
 
               <Controller
                 name="name"
@@ -92,7 +93,7 @@ export function Authetication() {
               <Controller
                 name="login"
                 control={control}
-                rules={{ required: "Login obrigatório" }}
+                rules={{ required: "Login obrigatório." }}
                 render={({ field }) => (
                   <FormControl isInvalid={errors?.login}>
 
@@ -116,7 +117,7 @@ export function Authetication() {
               <Controller
                 name="password"
                 control={control}
-                rules={{ required: "Senha é obrigatória" }}
+                rules={{ required: "Senha é obrigatória." }}
                 render={({ field }) => (
                   <FormControl isInvalid={errors.password}>
                     <Text color="dark.300">Senha</Text>
