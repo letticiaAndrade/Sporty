@@ -1,4 +1,4 @@
-import { Authetication, Home } from "../pages";
+import { Authetication, Categories, Home, Inscriptions, Tournament } from "../pages";
 import { Route, Routes } from "react-router-dom";
 
 export function RoutesApp() {
@@ -9,6 +9,13 @@ export function RoutesApp() {
 
             {/* TELAS REFERENTES A APLICAÇÃO */}
             <Route path="/home" element={<Home />} />
+            <Route path="/tournament" element={<Tournament />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/inscriptions" element={<Inscriptions />} />
+
+
+
+            
 
         </Routes>
     )
