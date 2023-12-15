@@ -1,5 +1,5 @@
 const timeout = 15000;
-export const base = `https://localhost:8080`;
+export const base = `http://localhost:8080`;
 
 const http = {
   get: async ({ url }) => {
