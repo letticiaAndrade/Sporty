@@ -16,11 +16,11 @@ export function RoutesApp() {
 
             {/* TELAS REFERENTES AS CATEGORIAS */}
             <Route path="/categories" element={<Categories />} />
-            <Route path="/categories/details" element={<Tournament />} />
+            <Route path="/categories/details" element={<Categories />} />
 
             {/* TELAS REFERENTES AS INSCRIÇÕES */}
             <Route path="/inscriptions" element={<Inscriptions />} />
-            <Route path="/inscriptions/details" element={<Tournament />} />
+            <Route path="/inscriptions/details" element={<Inscriptions />} />
         </Routes>
     )
 
