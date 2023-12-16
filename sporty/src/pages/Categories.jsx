@@ -1,17 +1,20 @@
-import { CheckCircle, MagnifyingGlass, Plus, CirclesFour } from "@phosphor-icons/react";
-import { Header, TitlePage, CategorieCard } from "../components";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Box, Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, InputGroup, InputLeftElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
 import routes from "../service/api";
-import { categoriesAPI } from "../service/apiExample";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Header, TitlePage, CategorieCard } from "../components";
+import { CheckCircle, Plus, CirclesFour } from "@phosphor-icons/react";
+import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
+// import { useCache } from "../hooks";
 
 export function Categories() {
-    const [categories, setCategories] = useState(categoriesAPI);
+    const [categories, setCategories] = useState([]);
+    // const { categoriesCache, setCache } = useCache();
+
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            name: ""
+            categoriaNome: "",
+            idTorneio: ""
         }
     });
 
@@ -21,15 +24,17 @@ export function Categories() {
         routes.categories.create({ body: { ...data } })
             .then(() => {
                 setCategories([]);
-                onCloseCreate();
-            })
 
+                onCloseCreate();
+                // setCache("categoriesCache", [...categories, {...data}]);
+            })
+            .catch(() => "Deu errado.")
     }
 
-    /* useEffect(() => {
-      if (!tournaments.length)
-        routes.torneio.list().then((e) => setTournaments(e))
-    }, [ tournaments, setTournaments ]); */
+    useEffect(() => {
+        if (!categories.length)
+            routes.categories.list().then((e) => setCategories(e))
+    }, [categories, setCategories]);
 
     console.log(categories)
 
@@ -57,7 +62,7 @@ export function Categories() {
                 <Stack direction="row" flexWrap="wrap" mt={8} spacing={3}>
                     {categories?.length
                         ? categories.map(categories =>
-                            <CategorieCard key={categories?.cat_nr_id} categorie={categories} />)
+                            <CategorieCard key={categories?.id} categorie={categories} />)
                         : (
                             <Center flexDir="column" w="full">
                                 {/* <Image src={nothing} w="80" mb={8} /> */}
@@ -74,14 +79,24 @@ export function Categories() {
                             <ModalCloseButton />
                             <ModalBody>
                                 <Stack spacing={3}>
-                                    <FormControl isRequired isInvalid={errors?.name}>
+                                    <FormControl isRequired isInvalid={errors?.categoriaNome}>
                                         <FormLabel color="dark.100">Nome</FormLabel>
                                         <Input
                                             bg="#FFF" placeholder="Nome"
                                             focusBorderColor="primary.400"
-                                            {...register("name", { required: "Nome é obrigatório." })}
+                                            {...register("categoriaNome", { required: "Nome é obrigatório." })}
                                         />
-                                        <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+                                        <FormErrorMessage>{errors?.categoriaNome?.message}</FormErrorMessage>
+                                    </FormControl>
+
+                                    <FormControl isRequired isInvalid={errors?.idTorneio}>
+                                        <FormLabel color="dark.100">Identificador</FormLabel>
+                                        <Input
+                                            bg="#FFF" placeholder="Identificador do torneio"
+                                            focusBorderColor="primary.400"
+                                            {...register("idTorneio", { required: "Nome é obrigatório." })}
+                                        />
+                                        <FormErrorMessage>{errors?.idTorneio?.message}</FormErrorMessage>
                                     </FormControl>
                                 </Stack>
                             </ModalBody>

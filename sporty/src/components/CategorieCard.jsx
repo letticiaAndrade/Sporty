@@ -27,7 +27,7 @@ export function CategorieCard({ categorie }) {
                 <Box>
                     <HStack>
                         <Text fontWeight="medium">
-                            {categorie?.cat_tx_nome}
+                            {categorie?.nomeCat}
                         </Text>
                     </HStack>
                 </Box>
@@ -40,7 +40,7 @@ export function CategorieCard({ categorie }) {
                 <HStack justify="center">
                     <Text>Identificador:</Text>
                     <HStack fontSize={25} fontWeight="medium" color="primary.600">
-                        <Text>{categorie?.cat_nr_id}</Text>
+                        <Text>{categorie?.id}</Text>
                         <Star />
                     </HStack>
                 </HStack>
