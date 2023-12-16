@@ -50,23 +50,33 @@ const http = {
   },
 };
 
-// rotas da api
+// rotas da api 
 const routes = {
+  // TORNEIOS
   torneio: {
-
     list: () => http.get({ url: "/torneio/getAll" }), //
-    create: (body ) => http({}).post({ url: '/torneio/criar', body: body }),
+    create: (body) => http({}).post({ url: "/torneio/criar", body: body }),
   },
 
-  categoria: {
-      list: (id) => http.get({ url: `/categoria/buscar/${id}` }), //
-      create: (body ) => http({}).post({ url: '/categoria/inserir', body: body }),
+  // CATEGORIAS
+  categories: {
+    list: () => http.get({ url: "/categoria/getAll" }), //
+    create: (body) => http({}).post({ url: "/categoria/inserir", body: body }),
+    searchById: (id) => http.get({ url: `/categoria/buscar/${id}` })
   },
 
-  // rotas da incricao aqui 
+  // INSCRIÇÕES
+  inscriptions: {
+    list: () => http.get({url: `/inscricao/getAll`}),
+    create: (body) => http({}).post({ url: "/inscricao/inserir", body: body }),
+    searchById: (body) => http.post({ url: `/inscricao/buscar`, body: body }),
+  },
 
-  user: {
-    signIn: (body) => http.post({ url: `/usuario/signin`, body: body }),
+  // USUARIOS
+  users: {
+    signIn: (body) => http.post({ url: `/usuario/login`, body: body }),
+    signUp: (body) => http.post({ url: `/usuario/inserir`, body: body }),
+    searchById: (body) => http.post({ url: `/usuario/buscar`, body: body }),
   },
 };
 
@@ -82,3 +92,5 @@ function headers() {
 }
 
 export default routes;
+
+
