@@ -27,7 +27,7 @@ export function TournamentCard({ tournament }) {
                 <Box>
                     <HStack>
                         <Text fontWeight="medium">
-                            {tournament?.tor_tx_name}
+                            {tournament?.nome}
                         </Text>
                     </HStack>
                 </Box>
@@ -40,7 +40,7 @@ export function TournamentCard({ tournament }) {
                 <HStack justify="center">
                     <Text>Identificador:</Text>
                     <HStack fontSize={25} fontWeight="medium" color="primary.600">
-                        <Text>{tournament?.tor_nr_id}</Text>
+                        <Text>{tournament?.id}</Text>
                         <Star />
                     </HStack>
                 </HStack>

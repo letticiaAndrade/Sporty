@@ -1,24 +1,24 @@
-import { CheckCircle, MagnifyingGlass, Plus, Trophy } from "@phosphor-icons/react";
+import { CheckCircle, Plus, Trophy } from "@phosphor-icons/react";
 import { Header, TitlePage, TournamentCard } from "../components";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Box, Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, InputGroup, InputLeftElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
+import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
 import routes from "../service/api";
-import { tournamentsAPI } from "../service/apiExample";
+// import { tournamentsAPI } from "../service/apiExample";
 
 export function Tournament() {
-    const [tournaments, setTournaments] = useState(tournamentsAPI);
+    const [tournaments, setTournaments] = useState([]);
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            name: ""
+            nome: ""
         }
     });
 
     const { isOpen: isOpenCreate, onOpen: onOpenCreate, onClose: onCloseCreate } = useDisclosure();
 
     const onSubmit = data => {
-        routes.torneio.create({ body: { ...data } })
+        routes.torneio.create({ body: { ...data }} )
             .then(() => {
                 setTournaments([]);
                 onCloseCreate();
@@ -26,10 +26,10 @@ export function Tournament() {
 
     }
 
-    /* useEffect(() => {
-      if (!tournaments.length)
-        routes.torneio.list().then((e) => setTournaments(e))
-    }, [ tournaments, setTournaments ]); */
+    useEffect(() => {
+        if (!tournaments.length)
+            routes.torneio.list().then((e) => setTournaments(e))
+    }, [tournaments, setTournaments]);
 
     console.log(tournaments)
 
@@ -74,14 +74,14 @@ export function Tournament() {
                             <ModalCloseButton />
                             <ModalBody>
                                 <Stack spacing={3}>
-                                    <FormControl isRequired isInvalid={errors?.name}>
+                                    <FormControl isRequired isInvalid={errors?.nome}>
                                         <FormLabel color="dark.100">Nome</FormLabel>
                                         <Input
                                             bg="#FFF" placeholder="Nome"
                                             focusBorderColor="primary.400"
-                                            {...register("name", { required: "Nome é obrigatório." })}
+                                            {...register("nome", { required: "Nome é obrigatório." })}
                                         />
-                                        <FormErrorMessage>{errors?.name?.message}</FormErrorMessage>
+                                        <FormErrorMessage>{errors?.nome?.message}</FormErrorMessage>
                                     </FormControl>
                                 </Stack>
                             </ModalBody>
