@@ -1,5 +1,5 @@
 const timeout = 15000;
-export const base = `http://localhost:8080`;
+export const base = `http://192.168.0.115:8080`;
 
 const http = {
   get: async ({ url }) => {
@@ -50,25 +50,27 @@ const http = {
   },
 };
 
-// rotas da api 
+// rotas da api
 const routes = {
   // TORNEIOS
   torneio: {
-    list: () => http.get({ url: "/torneio/getAll" }), //
-    create: (body) => http({}).post({ url: "/torneio/criar", body: body }),
+    list: () => http.get({ url: "/torneio/getAll" }),
+    create: ({ body }) => http.post({ url: "/torneio/criar", body: body }),
+    listAllCategoryById: ({ idTorneio }) => http.get({ url: `/categoria/buscar/${idTorneio}` }),
+
   },
 
   // CATEGORIAS
   categories: {
     list: () => http.get({ url: "/categoria/getAll" }), //
-    create: (body) => http({}).post({ url: "/categoria/inserir", body: body }),
-    searchById: (id) => http.get({ url: `/categoria/buscar/${id}` })
+    create: ({ body }) => http.post({ url: "/categoria/criar", body: body }),
+    searchById: ({ id }) => http.get({ url: `/categoria/recuperar/${id}` }),
   },
 
   // INSCRIÇÕES
   inscriptions: {
-    list: () => http.get({url: `/inscricao/getAll`}),
-    create: (body) => http({}).post({ url: "/inscricao/inserir", body: body }),
+    list: () => http.get({ url: `/inscricao/getAll` }),
+    create: (body) => http.post({ url: "/inscricao/inserir", body: body }),
     searchById: (body) => http.post({ url: `/inscricao/buscar`, body: body }),
   },
 
@@ -92,5 +94,3 @@ function headers() {
 }
 
 export default routes;
-
-
