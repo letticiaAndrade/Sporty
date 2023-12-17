@@ -1,4 +1,4 @@
-import { Authetication, Categories, Home, Inscriptions, Tournament, TournamentDetails } from "../pages";
+import { Authetication, Categories, Home, InscriptionDetails, Inscriptions, Tournament, TournamentDetails } from "../pages";
 import { Route, Routes } from "react-router-dom";
 
 export function RoutesApp() {
@@ -20,7 +20,7 @@ export function RoutesApp() {
 
             {/* TELAS REFERENTES AS INSCRIÇÕES */}
             <Route path="/inscriptions" element={<Inscriptions />} />
-            <Route path="/inscriptions/details" element={<Inscriptions />} />
+            <Route path="/inscriptions/details" element={<InscriptionDetails />} />
         </Routes>
     )
 
