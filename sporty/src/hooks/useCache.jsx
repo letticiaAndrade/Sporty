@@ -1,8 +1,10 @@
 import { create } from "zustand";
 
 export const useCache = create((set) => ({
-    tournamentCache: [],
+    tournamentsCache: [],
     categoriesCache: [],
+    inscriptionsCache: [],
+    usersCache: [],
     // session: null,
     setCache: (key, value) => set({ [key]: value }),
 }));
