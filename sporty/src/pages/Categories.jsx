@@ -1,15 +1,15 @@
 import routes from "../service/api";
+import { useCache } from "../hooks";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Header, TitlePage, CategorieCard } from "../components";
 import { CheckCircle, Plus, CirclesFour } from "@phosphor-icons/react";
-import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
-// import { useCache } from "../hooks";
+import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Stack, useDisclosure } from "@chakra-ui/react";
 
 export function Categories() {
-    const [categories, setCategories] = useState([]);
-    // const { categoriesCache, setCache } = useCache();
-
+    const [categories, setCategories] = useState([]),
+          [tournaments, setTournaments] = useState([]);
+    const { categoriesCache, tournamentsCache, setCache } = useCache();
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
@@ -23,20 +23,40 @@ export function Categories() {
     const onSubmit = data => {
         routes.categories.create({ body: { ...data } })
             .then(() => {
-                setCategories([]);
-
+                setCache("categoriesCache", [...categories, { ...data }]);
                 onCloseCreate();
-                // setCache("categoriesCache", [...categories, {...data}]);
             })
             .catch(() => "Deu errado.")
     }
 
     useEffect(() => {
-        if (!categories.length)
-            routes.categories.list().then((e) => setCategories(e))
-    }, [categories, setCategories]);
+        // tentar obter categorias e torneios do cache
+        const cachedCategories = categoriesCache['categoriesCache'];
+        const cachedTournaments = tournamentsCache['tournamentsCache'];
+        if (cachedTournaments) {
+            setTournaments(cachedTournaments);
+        } else {
+            // se não houver no cache, buscar do servidor
+            routes.torneio.list().then((e) => {
+                setTournaments(e);
+                // salvar no cache para uso futuro
+                setCache('tournamentsCache', e);
+            })
+        }
+        if (cachedCategories) {
+            setCategories(cachedCategories);
 
-    console.log(categories)
+        } else {
+            // se não houver no cache, buscar do servidor
+            routes.categories.list().then((e) => {
+                setCategories(e);
+                // salvar no cache para uso futuro
+                setCache('categoriesCache', e);
+            })
+        }
+    }, [categories, tournaments, setCache, categoriesCache, tournamentsCache]);
+
+    console.log(categories, tournaments)
 
     return (
         <Flex w="full" h="100vh">
@@ -90,12 +110,15 @@ export function Categories() {
                                     </FormControl>
 
                                     <FormControl isRequired isInvalid={errors?.idTorneio}>
-                                        <FormLabel color="dark.100">Identificador</FormLabel>
-                                        <Input
-                                            bg="#FFF" placeholder="Identificador do torneio"
+                                        <FormLabel color="dark.100">Torneio</FormLabel>
+                                        <Select
+                                            bg="#FFF"
+                                            placeholder="Selecione um torneio"
                                             focusBorderColor="primary.400"
-                                            {...register("idTorneio", { required: "Nome é obrigatório." })}
-                                        />
+                                            {...register("idTorneio", { required: "Selecione um torneio." })}
+                                        >
+                                            {tournaments?.map(tournament => <option key={tournaments?.id} value={tournament?.id}>{tournament?.id}</option>)}
+                                        </Select>
                                         <FormErrorMessage>{errors?.idTorneio?.message}</FormErrorMessage>
                                     </FormControl>
                                 </Stack>

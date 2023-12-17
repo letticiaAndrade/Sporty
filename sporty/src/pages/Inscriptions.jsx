@@ -1,14 +1,18 @@
 import routes from "../service/api";
+import { useCache } from "../hooks";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Header, TitlePage, InscriptionCard } from "../components";
 import { CheckCircle, Plus, IdentificationCard } from "@phosphor-icons/react";
-import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
-// import { useCache } from "../hooks";
+import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Stack, useDisclosure } from "@chakra-ui/react";
 
 export function Inscriptions() {
-    const [inscriptions, setInscriptions] = useState([]);
-    // const { categories, setCache } = useCache();
+    const [users, setUsers] = useState([]),
+        [categories, setCategories] = useState([]),
+        [inscriptions, setInscriptions] = useState([])
+
+    const { inscriptionsCache, categoriesCache, usersCache, setCache } = useCache();
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             categoriaId: "",
@@ -22,17 +26,48 @@ export function Inscriptions() {
     const onSubmit = data => {
         routes.inscriptions.create({ body: { ...data } })
             .then(() => {
-                setInscriptions([]);
+                setCache("inscriptionsCache", [...inscriptions, { ...data }]);
                 onCloseCreate();
-            })
+            }).catch(() => console.log("Ocorreu um erro."))
     }
 
     useEffect(() => {
-        if (!inscriptions.length)
-            routes.inscriptions.list().then((e) => setInscriptions(e))
-    }, [inscriptions, setInscriptions]);
+        // tentar obter categorias, usuarios e inscrições do cache
+        const cachedUsers = usersCache['usersCache'];
+        const cachedCategories = categoriesCache['categoriesCache'];
+        const cacheInscriptions = inscriptionsCache['inscriptionsCache'];
+        if (cacheInscriptions) {
+            setInscriptions(cacheInscriptions);
+        } else {
+            // se não houver no cache, buscar do servidor
+            routes.inscriptions.list().then((e) => {
+                setInscriptions(e);
+                // salvar no cache para uso futuro
+                setCache('inscriptionsCache', e);
+            })
+        }
+        if (cachedUsers) {
+            setUsers(cachedUsers);
+        } else {
+            // se não houver no cache, buscar do servidor
+            routes.users.list().then((e) => {
+                setUsers(e);
+                // salvar no cache para uso futuro
+                setCache('usersCache', e);
+            })
+        }
+        if (cachedCategories) {
+            setCategories(cachedCategories);
 
-    console.log(inscriptions)
+        } else {
+            // se não houver no cache, buscar do servidor
+            routes.categories.list().then((e) => {
+                setCategories(e);
+                // salvar no cache para uso futuro
+                setCache('categoriesCache', e);
+            })
+        }
+    }, [categoriesCache, inscriptions, inscriptionsCache, setCache, usersCache]);
 
     return (
         <Flex w="full" h="100vh">
@@ -61,7 +96,6 @@ export function Inscriptions() {
                             <InscriptionCard key={inscriptions?.id} inscription={inscriptions} />)
                         : (
                             <Center flexDir="column" w="full">
-                                {/* <Image src={nothing} w="80" mb={8} /> */}
                                 <Heading fontSize={24}>Nada aqui</Heading>
                             </Center>
                         )}
@@ -78,31 +112,40 @@ export function Inscriptions() {
 
                                     <FormControl isRequired isInvalid={errors?.categoriaId}>
                                         <FormLabel color="dark.100">Categoria</FormLabel>
-                                        <Input
-                                            bg="#FFF" placeholder="Identificador da categoria "
+                                        <Select
+                                            bg="#FFF"
+                                            placeholder="Selecione uma categoria"
                                             focusBorderColor="primary.400"
-                                            {...register("categoriaId", { required: "Identificador da categoria é obrigatório." })}
-                                        />
+                                            {...register("categoriaId", { required: "Selecione uma categoria." })}
+                                        >
+                                            {categories?.map(categorie => <option key={categories?.id} value={categorie?.id}>{categorie?.nomeCat}</option>)}
+                                        </Select>
                                         <FormErrorMessage>{errors?.categoriaId?.message}</FormErrorMessage>
                                     </FormControl>
 
                                     <FormControl isRequired isInvalid={errors?.userId1}>
                                         <FormLabel color="dark.100">Primeiro Participante</FormLabel>
-                                        <Input
-                                            bg="#FFF" placeholder="Identificador do participante"
+                                        <Select
+                                            bg="#FFF"
+                                            placeholder="Selecione um participante"
                                             focusBorderColor="primary.400"
-                                            {...register("userId1", { required: "Identificador do participante é obrigatório." })}
-                                        />
+                                            {...register("userId1", { required: "Selecione um participante." })}
+                                        >
+                                            {users?.map(user => <option key={users?.id} value={user?.id}>{user?.nome}</option>)}
+                                        </Select>
                                         <FormErrorMessage>{errors?.userId1?.message}</FormErrorMessage>
                                     </FormControl>
 
                                     <FormControl isRequired isInvalid={errors?.userId2}>
                                         <FormLabel color="dark.100">Segundo Participante</FormLabel>
-                                        <Input
-                                            bg="#FFF" placeholder="Identificador do participante"
+                                        <Select
+                                            bg="#FFF"
+                                            placeholder="Selecione um participante"
                                             focusBorderColor="primary.400"
-                                            {...register("userId2", { required: "Identificador do participante é obrigatório." })}
-                                        />
+                                            {...register("userId2", { required: "Selecione um participante." })}
+                                        >
+                                            {users?.map(user => <option key={users?.id} value={user?.id}>{user?.nome}</option>)}
+                                        </Select>
                                         <FormErrorMessage>{errors?.userId2?.message}</FormErrorMessage>
                                     </FormControl>
                                 </Stack>
