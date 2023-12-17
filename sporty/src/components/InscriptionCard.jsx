@@ -26,9 +26,7 @@ export function InscriptionCard({ inscription }) {
             <HStack spacing={4} w="full">
                 <Box>
                     <HStack>
-                        <Text fontWeight="medium">
-                            {inscription?.cat_tx_name}
-                        </Text>
+                        <Text fontWeight="medium"> N° {inscription?.id} </Text>
                     </HStack>
                 </Box>
             </HStack>
@@ -40,7 +38,7 @@ export function InscriptionCard({ inscription }) {
                 <HStack justify="center">
                     <Text>Identificador:</Text>
                     <HStack fontSize={25} fontWeight="medium" color="primary.600">
-                        <Text>{inscription?.ins_nr_id}</Text>
+                        <Text>{inscription?.id}</Text>
                         <Star />
                     </HStack>
                 </HStack>

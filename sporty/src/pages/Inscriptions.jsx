@@ -4,26 +4,25 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Stack, useDisclosure } from "@chakra-ui/react";
 import routes from "../service/api";
-import { inscriptionsAPI } from "../service/apiExample";
-import { useCache } from "../hooks";
+// import { useCache } from "../hooks";
 
 export function Inscriptions() {
-    const [inscriptions, setInscriptions] = useState(inscriptionsAPI);
+    const [inscriptions, setInscriptions] = useState([]);
     // const { categories, setCache } = useCache();
 
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
-            cat_nr_id: "",
-            usu_nr_id1: "",
-            usu_nr_id2: "",
+            categoriaId: "",
+            userId1: "",
+            userId2: "",
         }
     });
 
     const { isOpen: isOpenCreate, onOpen: onOpenCreate, onClose: onCloseCreate } = useDisclosure();
 
     const onSubmit = data => {
-        routes.categoria.create({ body: { ...data } })
+        routes.inscriptions.create({ body: { ...data } })
             .then(() => {
                 setInscriptions([]);
                 onCloseCreate();
@@ -31,10 +30,10 @@ export function Inscriptions() {
 
     }
 
-    /* useEffect(() => {
-      if (!tournaments.length)
-        routes.torneio.list().then((e) => setTournaments(e))
-    }, [ tournaments, setTournaments ]); */
+    useEffect(() => {
+      if (!inscriptions.length)
+        routes.inscriptions.list().then((e) => setInscriptions(e))
+    }, [ inscriptions, setInscriptions ]); 
 
     console.log(inscriptions)
 
@@ -62,7 +61,7 @@ export function Inscriptions() {
                 <Stack direction="row" flexWrap="wrap" mt={8} spacing={3}>
                     {inscriptions?.length
                         ? inscriptions.map(inscriptions =>
-                            <InscriptionCard key={inscriptions?.ins_nr_id} inscription={inscriptions} />)
+                            <InscriptionCard key={inscriptions?.id} inscription={inscriptions} />)
                         : (
                             <Center flexDir="column" w="full">
                                 {/* <Image src={nothing} w="80" mb={8} /> */}
@@ -80,34 +79,34 @@ export function Inscriptions() {
                             <ModalBody>
                                 <Stack spacing={3}>
 
-                                    <FormControl isRequired isInvalid={errors?.cat_nr_id}>
+                                    <FormControl isRequired isInvalid={errors?.categoriaId}>
                                         <FormLabel color="dark.100">Categoria</FormLabel>
                                         <Input
                                             bg="#FFF" placeholder="Identificador da categoria "
                                             focusBorderColor="primary.400"
-                                            {...register("cat_nr_id", { required: "Identificador da categoria é obrigatório." })}
+                                            {...register("categoriaId", { required: "Identificador da categoria é obrigatório." })}
                                         />
-                                        <FormErrorMessage>{errors?.cat_nr_id?.message}</FormErrorMessage>
+                                        <FormErrorMessage>{errors?.categoriaId?.message}</FormErrorMessage>
                                     </FormControl>
 
-                                    <FormControl isRequired isInvalid={errors?.usu_nr_id1}>
+                                    <FormControl isRequired isInvalid={errors?.userId1}>
                                         <FormLabel color="dark.100">Primeiro Participante</FormLabel>
                                         <Input
                                             bg="#FFF" placeholder="Identificador do participante"
                                             focusBorderColor="primary.400"
-                                            {...register("usu_nr_id1", { required: "Identificador do participante é obrigatório." })}
+                                            {...register("userId1", { required: "Identificador do participante é obrigatório." })}
                                         />
-                                        <FormErrorMessage>{errors?.usu_nr_id1?.message}</FormErrorMessage>
+                                        <FormErrorMessage>{errors?.userId1?.message}</FormErrorMessage>
                                     </FormControl>
 
-                                    <FormControl isRequired isInvalid={errors?.usu_nr_id2}>
+                                    <FormControl isRequired isInvalid={errors?.userId2}>
                                         <FormLabel color="dark.100">Segundo Participante</FormLabel>
                                         <Input
                                             bg="#FFF" placeholder="Identificador do participante"
                                             focusBorderColor="primary.400"
-                                            {...register("usu_nr_id2", { required: "Identificador da categoria é obrigatório." })}
+                                            {...register("userId2", { required: "Identificador do participante é obrigatório." })}
                                         />
-                                        <FormErrorMessage>{errors?.usu_nr_id2?.message}</FormErrorMessage>
+                                        <FormErrorMessage>{errors?.userId2?.message}</FormErrorMessage>
                                     </FormControl>
                                 </Stack>
                             </ModalBody>

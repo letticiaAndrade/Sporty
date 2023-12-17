@@ -70,7 +70,7 @@ const routes = {
   // INSCRIÇÕES
   inscriptions: {
     list: () => http.get({ url: `/inscricao/getAll` }),
-    create: (body) => http.post({ url: "/inscricao/inserir", body: body }),
+    create: ({body}) => http.post({ url: "/inscricao/inserir", body: body }),
     searchById: (body) => http.post({ url: `/inscricao/buscar`, body: body }),
   },
 
