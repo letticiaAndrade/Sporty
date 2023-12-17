@@ -20,10 +20,9 @@ export function Tournament() {
     const onSubmit = data => {
         routes.torneio.create({ body: { ...data }} )
             .then(() => {
-                setTournaments([]);
+                setTournaments(tournaments);
                 onCloseCreate();
             })
-
     }
 
     useEffect(() => {
