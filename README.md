@@ -8,12 +8,3 @@ O foco central deste repositório é desenvolver e aprimorar a interface do usu�
 
 # Tecnologias Utilizadas
 Estive utilizando tecnologias modernas para construir uma interface dinâmica e responsiva. Frameworks como React.js e Chakra UI são peças fundamentais para garantir um design elegante e uma experiência de usuário consistente em diferentes dispositivos.
-
-# React + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
