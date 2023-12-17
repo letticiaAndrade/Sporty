@@ -26,7 +26,7 @@ export function InscriptionCard({ inscription }) {
             <HStack spacing={4} w="full">
                 <Box>
                     <HStack>
-                        <Text fontWeight="medium"> N° {inscription?.id} </Text>
+                        <Text fontWeight="medium"> N° de inscrição {inscription?.id} </Text>
                     </HStack>
                 </Box>
             </HStack>
