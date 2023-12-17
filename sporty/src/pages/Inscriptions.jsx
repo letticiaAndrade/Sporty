@@ -1,16 +1,14 @@
-import { CheckCircle, Plus, IdentificationCard } from "@phosphor-icons/react";
-import { Header, TitlePage, InscriptionCard } from "../components";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Stack, useDisclosure } from "@chakra-ui/react";
 import routes from "../service/api";
+import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Header, TitlePage, InscriptionCard } from "../components";
+import { CheckCircle, Plus, IdentificationCard } from "@phosphor-icons/react";
+import { Button, Center, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, useDisclosure } from "@chakra-ui/react";
 // import { useCache } from "../hooks";
 
 export function Inscriptions() {
     const [inscriptions, setInscriptions] = useState([]);
     // const { categories, setCache } = useCache();
-
-
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             categoriaId: "",
@@ -27,13 +25,12 @@ export function Inscriptions() {
                 setInscriptions([]);
                 onCloseCreate();
             })
-
     }
 
     useEffect(() => {
-      if (!inscriptions.length)
-        routes.inscriptions.list().then((e) => setInscriptions(e))
-    }, [ inscriptions, setInscriptions ]); 
+        if (!inscriptions.length)
+            routes.inscriptions.list().then((e) => setInscriptions(e))
+    }, [inscriptions, setInscriptions]);
 
     console.log(inscriptions)
 
