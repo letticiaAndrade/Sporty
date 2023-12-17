@@ -56,7 +56,7 @@ const routes = {
   torneio: {
     list: () => http.get({ url: "/torneio/getAll" }),
     create: ({ body }) => http.post({ url: "/torneio/criar", body: body }),
-    listAllCategoryById: ({ idTorneio }) => http.get({ url: `/categoria/buscar/${idTorneio}` }),
+    listAllCategoryById: ({ id }) => http.get({ url: `/categoria/recuperar?id=${id}` }),
 
   },
 
@@ -71,7 +71,7 @@ const routes = {
   inscriptions: {
     list: () => http.get({ url: `/inscricao/getAll` }),
     create: ({body}) => http.post({ url: "/inscricao/inserir", body: body }),
-    searchById: (body) => http.post({ url: `/inscricao/buscar`, body: body }),
+    searchById: ({body}) => http.post({ url: `/inscricao/buscar`, body: body }),
   },
 
   // USUARIOS
