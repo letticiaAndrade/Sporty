@@ -1,4 +1,5 @@
 import { useState } from "react";
+import routes from "../service/api";
 import { useNavigate } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import Esporte from "../../public/assets/esporte.png";
@@ -9,63 +10,26 @@ export function Authetication() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
-  const user = {
-    name: "Leticia",
-    login: "123",
-    password: "123"
-  };
-
   const {
     handleSubmit,
     control,
-    setError,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "",
+      nome: "",
       login: "",
-      password: "",
+      senha: "",
     },
   });
 
   const onSignUp = (data) => {
-    if (data.name === user.name && data.login === user.login && data.password === user.password) {
-      navigate("Home")
-    } else {
-      // Autenticação falhou
-      setError("name", {
-        type: "validate",
-        message: "Credenciais inválidas"
-      });
-
-      setError("login", {
-        type: "validate",
-        message: "Credenciais inválidas",
-      });
-
-      setError("password", {
-        type: "validate",
-        message: "Credenciais inválidas",
-      });
-    }
+    routes.users.signUp({ body: { ...data } }).then(() => navigate("Home")).catch(() => alert("Deu errado o cadastro."))
   };
 
   const onSignIn = (data) => {
-    if (data.login === user.login && data.password === user.password) {
+    routes.users.signIn({ body: { ...data } }).then(() => {
       navigate("Home")
-    } else {
-      // Autenticação falhou
-
-      setError("login", {
-        type: "validate",
-        message: "Credenciais inválidas",
-      });
-
-      setError("password", {
-        type: "validate",
-        message: "Credenciais inválidas",
-      });
-    }
+    }).catch(() => alert("Deu errado o login."))
   };
 
   return (
@@ -74,8 +38,6 @@ export function Authetication() {
 
         <Center bgImage={Esporte} filter='auto' flexDirection="column" blur='1px' bgSize="cover" display={{ base: "none", lg: "flex" }} bgColor="primary.400" flex={1}>
           <Text fontSize={32} color="light.50" casing="uppercase">Sporty</Text>
-          {/* <Text fontSize={24} color="light.50" casing="uppercase"> A melhor plataforma de gerenciamento de torneios</Text> */}
-
         </Center>
 
         <Flex bgColor="light.100" flex={1} flexDir="column" justifyContent="center" padding={20}>
@@ -92,12 +54,12 @@ export function Authetication() {
                 <TabPanel>
                   <form onSubmit={handleSubmit(onSignUp)}>
                     <Controller
-                      name="name"
+                      name="nome"
                       control={control}
                       rules={{ required: "Nome obrigatório." }}
                       render={({ field }) => (
 
-                        <FormControl isInvalid={errors?.name}>
+                        <FormControl isInvalid={errors?.nome}>
                           <Text color="dark.300">Nome</Text>
                           <InputGroup>
                             <InputLeftElement pointerEvents='none'>
@@ -105,9 +67,9 @@ export function Authetication() {
                             </InputLeftElement>
                             <Input focusBorderColor="primary.400" variant="outline" type='text' placeholder='Leticia Matos' {...field} />
                           </InputGroup>
-                          {errors?.name && (
+                          {errors?.nome && (
                             <FormErrorMessage ml={5}>
-                              {errors?.name?.message}
+                              {errors?.nome?.message}
                             </FormErrorMessage>
                           )}
                         </FormControl>
@@ -139,11 +101,11 @@ export function Authetication() {
                     />
 
                     <Controller
-                      name="password"
+                      name="senha"
                       control={control}
                       rules={{ required: "Senha é obrigatória." }}
                       render={({ field }) => (
-                        <FormControl isInvalid={errors.password}>
+                        <FormControl isInvalid={errors.senha}>
                           <Text color="dark.300">Senha</Text>
                           <InputGroup>
                             <InputLeftElement color="primary.400" pointerEvents='none'>
@@ -169,9 +131,9 @@ export function Authetication() {
                               }
                             />
                           </InputGroup>
-                          {errors.password && (
+                          {errors.senha && (
                             <FormErrorMessage ml={5}>
-                              {errors?.password?.message}
+                              {errors?.senha?.message}
 
                             </FormErrorMessage>
                           )}
@@ -213,11 +175,11 @@ export function Authetication() {
                     />
 
                     <Controller
-                      name="password"
+                      name="senha"
                       control={control}
                       rules={{ required: "Senha é obrigatória." }}
                       render={({ field }) => (
-                        <FormControl isInvalid={errors.password}>
+                        <FormControl isInvalid={errors.senha}>
                           <Text color="dark.300">Senha</Text>
                           <InputGroup>
                             <InputLeftElement color="primary.400" pointerEvents='none'>
@@ -243,9 +205,9 @@ export function Authetication() {
                               }
                             />
                           </InputGroup>
-                          {errors.password && (
+                          {errors.senha && (
                             <FormErrorMessage ml={5}>
-                              {errors?.password?.message}
+                              {errors?.senha?.message}
 
                             </FormErrorMessage>
                           )}

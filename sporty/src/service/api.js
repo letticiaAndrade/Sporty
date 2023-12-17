@@ -76,8 +76,8 @@ const routes = {
 
   // USUARIOS
   users: {
-    signIn: (body) => http.post({ url: `/usuario/login`, body: body }),
-    signUp: (body) => http.post({ url: `/usuario/inserir`, body: body }),
+    signIn: ({body}) => http.post({ url: `/usuario/login`, body: body }),
+    signUp: ({body}) => http.post({ url: `/usuario/inserir`, body: body }),
     searchById: (body) => http.post({ url: `/usuario/buscar`, body: body }),
   },
 };
