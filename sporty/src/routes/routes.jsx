@@ -1,4 +1,4 @@
-import { Authetication, Categories, Home, Inscriptions, Tournament } from "../pages";
+import { Authetication, Categories, Home, Inscriptions, Tournament, TournamentDetails } from "../pages";
 import { Route, Routes } from "react-router-dom";
 
 export function RoutesApp() {
@@ -12,7 +12,7 @@ export function RoutesApp() {
 
             {/* TELAS REFERENTES AO TORNEIO */}
             <Route path="/tournament" element={<Tournament />} />
-            <Route path="/tournament/details" element={<Tournament />} />
+            <Route path="/tournament/details" element={<TournamentDetails />} />
 
             {/* TELAS REFERENTES AS CATEGORIAS */}
             <Route path="/categories" element={<Categories />} />
