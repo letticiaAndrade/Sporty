@@ -11,6 +11,7 @@ export function ModuleButton({ label, Icon, onClick, comment = null }) {
       boxShadow="md"
       flexDir="column"
       color="dark.300"
+      m={8}
       borderRadius={8}
       opacity={1}
       w={{ base: "80%", sm: 280 }}

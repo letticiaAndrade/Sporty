@@ -1,12 +1,12 @@
 import { useMemo, useState } from "react";
 import { ModuleButton } from "./ModuleButton";
 import { useNavigate } from "react-router-dom";
-import {CirclesFour, IdentificationCard, Trophy} from "@phosphor-icons/react";
+import { CirclesFour, IdentificationCard, Trophy } from "@phosphor-icons/react";
 
 export function UserModules() {
     const navigation = useNavigate();
     // const session = useCache(state => state.session);
-    const [ module ] = useState([
+    const [module] = useState([
         {
             name: "tournaments",
             render: (key) => <ModuleButton key={key}
@@ -34,15 +34,15 @@ export function UserModules() {
                 onClick={() => navigation("/inscriptions")}
             />
         },
-      
+
     ]);
 
     const modules = useMemo(() => {
-            return module.map(mod => {
-                    return mod.render(mod.name)
-            })
-        
-    }, [ module ]);
+        return module.map(mod => {
+            return mod.render(mod.name)
+        })
+
+    }, [module]);
 
     return modules;
 
